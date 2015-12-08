@@ -1,0 +1,66 @@
+<html>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+
+<button type="button" onclick="sacaDweet();">saca info</button>
+
+
+<button type="button" onclick="sube();"> sube a base </button>
+<div id="despliega">
+</div>
+
+<p id="p"> </p>
+
+<script src="http://dweet.io/client/dweet.io.min.js"></script>
+
+<script type="text/javascript">
+
+var temperatura;
+
+function sacaDweet(){
+	dweetio.get_latest_dweet_for("caritasTempMTY", function(err, dweet){
+
+
+    		var dweet = dweet[0]; // Dweet is always an array of 1
+
+
+		var des = document.getElementById("despliega");
+		var obj = dweet.content;
+  		des.innerHTML += obj.temperature;//.temperature;	
+		temperatura = obj.temperature;	  
+
+		console.log(dweet.thing); // The generated name
+    		console.log(dweet.content); // The content of the dweet
+    		console.log(dweet.created); // The create date of the dweet
+
+	});
+	
+
+}
+
+function sube(){
+	
+	var call = new XMLHttpRequest();
+        call.onreadystatechange=function(){
+                if(call.readyState == 4 && call.status == 200){
+			document.getElementById("despliega").innerHTML +="<br> Entro a subir";
+                }
+        }
+        call.open("GET", "receive.php?temp="+temperatura, true);
+//        call.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+	call.send();
+	
+	document.getElementById("despliega").innerHTML +="<br> Entro a sube";
+
+}
+
+
+
+
+
+</script>
+
+
+</html>
+
